@@ -5,22 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Brainymo</title>
     <link href="https://fonts.googleapis.com/css?family=Abel|Lobster" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/memory.css">
+    <link rel="stylesheet" href="assets/memory.css">
 </head>
 <body>
 
 <div class="align-center">
+
     <h1 class="heading">Brainymo</h1>
+
     <button class="btn" id="btn-start">
         Start game
     </button>
+
+    <div class="cards-container">
+        <div class="flip-container">
+            <div class="flipper">
+                <div class="front">
+                    <h1>Front</h1>
+                </div>
+                <div class="back">
+                    <h1>Back</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-container">
+            <div class="flipper">
+                <div class="front">
+                    <h1>Front</h1>
+                </div>
+                <div class="back">
+                    <h1>Back</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-container">
+            <div class="flipper">
+                <div class="front">
+                    <h1>Front</h1>
+                </div>
+                <div class="back">
+                    <h1>Back</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<script src="assets/js/main.js"></script>
+<script src="assets/main.js"></script>
 
 <script>
 
     var btnStart = document.getElementById('btn-start');
+    var cards = document.getElementsByClassName('flip-container');
     var brainymo;
 
     btnStart.addEventListener('click', function() {
@@ -28,8 +67,13 @@
         brainymo = new BRAINYMO.Game('configuration');
         brainymo.startGame();
 
-
     });
+
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+    }
 
 </script>
 
