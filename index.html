@@ -4,11 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Brainymo</title>
+    <link href="https://fonts.googleapis.com/css?family=Abel|Lobster" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/memory.css">
 </head>
 <body>
 
+<div class="align-center">
+    <h1 class="heading">Brainymo</h1>
+    <button class="btn" id="btn-start">
+        Start game
+    </button>
+</div>
 
 <script src="assets/js/main.js"></script>
+
+<script>
+
+    var btnStart = document.getElementById('btn-start');
+    var brainymo;
+
+    btnStart.addEventListener('click', function() {
+
+        brainymo = new BRAINYMO.Game('configuration');
+        brainymo.startGame();
+
+
+    });
+
+</script>
+
 </body>
 </html>

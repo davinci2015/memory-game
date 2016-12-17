@@ -1,0 +1,80 @@
+/*
+
+Colors
+------
+white: #FFFFEA
+gray: #D8D8D8
+red: #FF5E5B
+green: #00CECB
+yellow: #FFED66
+
+*/
+
+
+
+/* General */
+
+body {
+    background-color: #FFFFEA;
+    background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png");
+    font-family: 'Abel', sans-serif;
+    color: #FF5E5B;
+}
+
+
+
+
+
+/* Main page */
+
+.heading {
+    font-size: 52px;
+    font-family: 'Lobster', cursive;
+    color: #FF5E5B;
+}
+
+
+
+
+
+/* Buttons */
+
+.btn {
+    display: inline-block;
+    background-color: #FFED66;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 30px;
+
+    font-family: 'Abel', sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #FF5E5B;
+
+    box-shadow: 0 3px 0 #FF5E5B;
+    cursor: pointer;
+    transition: all 100ms linear;
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+    -webkit-transform: translateY(-4px);
+    box-shadow: 0 7px 0 #FF5E5B;
+}
+
+.btn:focus {
+    outline: 0;
+}
+
+
+
+
+
+
+
+/* Helpers */
+
+.align-center {
+    text-align: center;
+}
