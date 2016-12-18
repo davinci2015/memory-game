@@ -39,11 +39,13 @@
 
         $('#btn-start').click(function() {
             var brainymo = new BRAINYMO.Game({
+                numberOfSameCards: 2,
                 cards: [
                     { backImg: 'http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg' },
                     { backImg: 'https://unagb.files.wordpress.com/2015/11/grizzly-bear2.jpg' },
                 ]
             });
+            $(this).text('Restart');
         });
 
     });

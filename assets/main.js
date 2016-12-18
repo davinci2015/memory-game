@@ -6,10 +6,9 @@ BRAINYMO.Game = (function() {
     return function(config) {
 
         this.startGame = function() {
-            var card = new BRAINYMO.Card();
-
+            var card = new BRAINYMO.Card(config);
             card.attachCardEvent();
-            card.generateCards(config.cards);
+            card.generateCards();
         };
 
         this.startGame();
@@ -47,13 +46,17 @@ BRAINYMO.Card = (function () {
         return cardsArray;
     }
 
-    function appendCardsToDOM(cards) {
+    function appendCardsToDOM(cards, numberOfSameCards) {
         var templates = [];
         var preparedTemplate;
 
         cards.forEach(function (card) {
             preparedTemplate = prepareCardTemplate(card);
-            templates.push(preparedTemplate, preparedTemplate.clone());
+
+            for (var i = 0; i < numberOfSameCards; i++) {
+                templates.push(preparedTemplate.clone());
+            }
+
         });
 
         templates = shuffleCards(templates);
@@ -67,18 +70,33 @@ BRAINYMO.Card = (function () {
         $cardsContainer.fadeIn('slow');
     }
     
-    return function() {
+    return function(config) {
+
+        // Array to keep track of how many cards are active/open
+        var activeCards = [];
 
         this.attachCardEvent = function() {
             $cardsContainer.unbind().on('click', '.flip-container', function() {
-                $(this).toggleClass('active');
+                // Set card in active state
+                if ( !$(this).hasClass('active') ) {
+                    $(this).addClass('active');
+                    activeCards.push($(this));
+
+                    if(activeCards.length === config.numberOfSameCards + 1) {
+                        for(var i = 0; i < activeCards.length - 1; i++) {
+                            activeCards[i].removeClass('active');
+                        }
+                        activeCards.splice(0, config.numberOfSameCards);
+                    }
+                }
+
             });
         };
 
-        this.generateCards = function(cards) {
-            appendCardsToDOM(cards);
+        this.generateCards = function() {
+            appendCardsToDOM(config.cards, config.numberOfSameCards);
         };
-
+        
     }
     
 })();
