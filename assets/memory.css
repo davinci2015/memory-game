@@ -11,7 +11,6 @@ yellow: #FFED66
 */
 
 
-
 /* General */
 
 body {
@@ -20,8 +19,6 @@ body {
     font-family: 'Abel', sans-serif;
     color: #FF5E5B;
 }
-
-
 
 
 
@@ -36,15 +33,11 @@ body {
 
 
 
-
-
-
-
 /* Cards */
 
 .cards-container {
     display: block;
-    margin: 40px 0;
+    margin: 40px;
 }
 
 .flip-container {
@@ -96,10 +89,6 @@ body {
 
 
 
-
-
-
-
 /* Buttons */
 
 .btn {
@@ -129,9 +118,6 @@ body {
 .btn:focus {
     outline: 0;
 }
-
-
-
 
 
 
