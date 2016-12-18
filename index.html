@@ -14,66 +14,39 @@
     <h1 class="heading">Brainymo</h1>
 
     <button class="btn" id="btn-start">
-        Start game
+        Start
     </button>
 
     <div class="cards-container">
-        <div class="flip-container">
+        <div class="flip-container hide" id="card-template">
             <div class="flipper">
                 <div class="front">
-                    <h1>Front</h1>
+                    <h1>Card</h1>
                 </div>
-                <div class="back">
-                    <h1>Back</h1>
-                </div>
-            </div>
-        </div>
-
-        <div class="flip-container">
-            <div class="flipper">
-                <div class="front">
-                    <h1>Front</h1>
-                </div>
-                <div class="back">
-                    <h1>Back</h1>
-                </div>
-            </div>
-        </div>
-
-        <div class="flip-container">
-            <div class="flipper">
-                <div class="front">
-                    <h1>Front</h1>
-                </div>
-                <div class="back">
-                    <h1>Back</h1>
-                </div>
+                <div class="back"></div>
             </div>
         </div>
     </div>
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="assets/main.js"></script>
 
 <script>
 
-    var btnStart = document.getElementById('btn-start');
-    var cards = document.getElementsByClassName('flip-container');
-    var brainymo;
+    $(function() {
 
-    btnStart.addEventListener('click', function() {
-
-        brainymo = new BRAINYMO.Game('configuration');
-        brainymo.startGame();
+        $('#btn-start').click(function() {
+            var brainymo = new BRAINYMO.Game({
+                cards: [
+                    { backImg: 'http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg' },
+                    { backImg: 'https://unagb.files.wordpress.com/2015/11/grizzly-bear2.jpg' },
+                ]
+            });
+        });
 
     });
-
-    for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
-    }
 
 </script>
 

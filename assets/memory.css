@@ -48,6 +48,7 @@ body {
 }
 
 .flip-container {
+    position: relative;
     display: inline-block;
     margin: 15px;
     perspective: 1000px;
@@ -59,9 +60,10 @@ body {
 }
 
 .flip-container, .front, .back {
+    border-radius: 5px;
     color: #FFFFEA;
-    width: 320px;
-    height: 480px;
+    width: 180px;
+    height: 220px;
 }
 
 .flipper {
@@ -90,7 +92,6 @@ body {
     background-color: #00CECB;
     transform: rotateY(180deg);
 }
-
 
 
 
@@ -139,4 +140,8 @@ body {
 
 .align-center {
     text-align: center;
+}
+
+.hide {
+    display: none !important;
 }
