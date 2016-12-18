@@ -60,10 +60,9 @@ body {
 }
 
 .flipper {
+    position: relative;
     transition: 0.6s;
     transform-style: preserve-3d;
-
-    position: relative;
 }
 
 .front, .back {
@@ -81,9 +80,24 @@ body {
     transform: rotateY(0deg);
 }
 
+.front label {
+    display: inline-block;
+    font-size: 26px;
+    padding-top: 15px;
+}
+
 .back {
+    position: relative;
     background-color: #00CECB;
     transform: rotateY(180deg);
+    text-align:center;
+    vertical-align:middle;
+    display:table-cell;
+}
+
+.back label {
+    width: 100%;
+    font-size: 24px;
 }
 
 
@@ -130,4 +144,45 @@ body {
 
 .hide {
     display: none !important;
+}
+
+.cursor-default {
+    cursor: default !important;
+}
+
+
+/* Animations */
+
+@keyframes wobble {
+    from {
+        transform: none;
+    }
+
+    15% {
+        transform: translate3d(-10%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    }
+
+    30% {
+        transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 3deg);
+    }
+
+    45% {
+        transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    }
+
+    60% {
+        transform: translate3d(5%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    }
+
+    75% {
+        transform: translate3d(-10%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+.wobble {
+    animation: wobble 600ms ease-in-out;
 }

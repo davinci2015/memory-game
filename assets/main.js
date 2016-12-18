@@ -4,43 +4,85 @@ BRAINYMO.Game = (function() {
 
     // Array to keep track of how many cards are active/open
     var activeCards = [];
-
+    var timeStart, timeEnd, timeDiff;
+    var numOfCards;
+    var cardHitCounter = 0;
 
     /**
      * Method that will be invoked on card click event
-     * @param {Number} numberOfSameCards 
      */
-    function handleCardClick(numberOfSameCards) {
+    function handleCardClick() {
+
+        var connection = $(this).data('connection');
+        var hit;
+
         // Set card in active state
         // 'this' needs to be attached to context of card which is clicked
         if ( !$(this).hasClass('active') ) {
             $(this).addClass('active');
             activeCards.push($(this));
 
-            // In case when user open more cards then 'numberOfSameCards'
-            // then automatically close cards
-            if(activeCards.length === numberOfSameCards + 1) {
+            // If user click on two cards then check
+            if (activeCards.length == 2) {
+                hit = checkActiveCards(activeCards);
+            }
+
+            if (hit === true) {
+                cardHitCounter++;
+                activeCards[0].add(activeCards[1]).unbind().addClass('wobble cursor-default');
+                activeCards = [];
+
+                // Game End
+                if(cardHitCounter === (numOfCards / 2)) {
+                    endGame();
+                }
+            }
+            // In case when user open more then 2 cards then automatically close first two
+            else if(activeCards.length === 3) {
                 for(var i = 0; i < activeCards.length - 1; i++) {
                     activeCards[i].removeClass('active');
                 }
-                activeCards.splice(0, numberOfSameCards);
+                activeCards.splice(0, 2);
             }
         }
     }
 
-    return function(config) {
+    function endGame() {
+        // Reset hit counter
+        cardHitCounter = 0;
 
+        // Calculate time
+        timeEnd = new Date();
+        timeDiff = (timeEnd - timeStart) / 1000;
+        alert("Your time: " + timeDiff + " seconds");
+    }
+
+    function checkActiveCards(connections) {
+        return connections[0].data('connection') === connections[1].data('connection');
+    }
+
+    return function(config) {
         var card;
+
         /**
-         * Main method for game start
+         * Main method for game initialization
          */
         this.startGame = function() {
-            card = new BRAINYMO.Card(config);
+            card = new BRAINYMO.Card();
+            numOfCards = config.cards.length;
             card.attachCardEvent(handleCardClick, config);
         };
-        
-        this.generateNewCardSet = function() {
+
+        /**
+         * After game initialization call this method in order to generate cards
+         */
+        this.generateCardSet = function() {
+            // Generate new card set
             card.generateCards(config.cards, config.numberOfSameCards);
+            // Reset active cards array
+            activeCards = [];
+            // Set timer
+            timeStart = new Date();
         };
 
         this.startGame();
@@ -63,12 +105,23 @@ BRAINYMO.Card = (function () {
      * @return {Object} template - jquery object
      */
     function prepareCardTemplate (card) {
-        var template = $cardTemplate.clone().removeAttr('id').removeClass('hide');
+        var template = $cardTemplate
+                            .clone()
+                            .removeAttr('id')
+                            .removeClass('hide')
+                            .attr('data-connection', card.connectionID);
 
-        template.find('.back').css({
-            'background': 'url(' + card.backImg + ') no-repeat center center',
-            'background-size': 'cover'
-        });
+        // If card has background image
+        if (card.backImg != '' && card.backImg != undefined) {
+            template.find('.back').css({
+                'background': 'url(' + card.backImg + ') no-repeat center center',
+                'background-size': 'cover'
+            });
+        }
+        // Else if card has no background image but has text
+        else if (card.backTxt != '' && card.backTxt != undefined) {
+            template.find('.back > label').html(card.backTxt);
+        }
 
         return template;
     }
@@ -100,18 +153,15 @@ BRAINYMO.Card = (function () {
          * Prepare all cards and insert them into DOM
          * Before inserting new set of cards method will erase all previous cards
          * @param {Object} cards - array of card objects
-         * @param {Number} numberOfSameCards
          */
-        this.generateCards = function(cards, numberOfSameCards) {
+        this.generateCards = function(cards) {
             var templates = [];
             var preparedTemplate;
 
             // Prepare every card and push it to array
             cards.forEach(function (card) {
                 preparedTemplate = prepareCardTemplate(card);
-                for (var i = 0; i < numberOfSameCards; i++) {
-                    templates.push(preparedTemplate.clone());
-                }
+                templates.push(preparedTemplate);
             });
 
             // Shuffle card array
@@ -136,9 +186,9 @@ BRAINYMO.Card = (function () {
          * @param {Function} func - function that will be invoked on card click
          * @param {Object} config - configuration object
          */
-        this.attachCardEvent = function(func, config) {
+        this.attachCardEvent = function(func) {
             $cardsContainer.unbind().on('click', '.flip-container', function() {
-                func.call(this, config.numberOfSameCards);
+                func.call(this);
             });
         }
     }

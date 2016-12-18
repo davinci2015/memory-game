@@ -21,12 +21,21 @@
         <div class="flip-container hide" id="card-template">
             <div class="flipper">
                 <div class="front">
-                    <h1>Card</h1>
+                    <label>Card</label>
                 </div>
-                <div class="back"></div>
+                <div class="back">
+                    <label></label>
+                </div>
             </div>
         </div>
     </div>
+
+    <a href="https://github.com/davinci2015/memory-game" target="_blank">
+        <img style="position: absolute; top: 0; right: 0; border: 0;"
+             src="assets/img/github.png"
+             alt="Fork me on GitHub"
+             data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png">
+    </a>
 
 </div>
 
@@ -38,15 +47,76 @@
     $(function() {
 
         var brainymo = new BRAINYMO.Game({
-            numberOfSameCards: 2,
             cards: [
-                { backImg: 'http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg' },
-                { backImg: 'https://unagb.files.wordpress.com/2015/11/grizzly-bear2.jpg' },
+                {
+                    backImg: 'http://mikemclin.net/mmwp/wp-content/uploads/2013/04/grunt-task-runner.png',
+                    connectionID: 1
+                },
+                {
+                    backTxt: 'GRUNT',
+                    connectionID: 1
+                },
+                {
+                    backImg: 'http://2016.reactjsday.it/img/confs/reactjs/reactjsday-social.png',
+                    connectionID: 2
+                },
+                {
+                    backTxt: 'REACT',
+                    connectionID: 2
+                },
+                {
+                    backImg: 'https://gravatar.com/avatar/5a224f121f96bd037bf6c1c1e2b686fb?s=512&d=',
+                    connectionID: 3
+                },
+                {
+                    backTxt: 'GSAP',
+                    connectionID: 3
+                },
+                {
+                    backImg: 'https://d1dkupr86d302v.cloudfront.net/community/assets/social-media-icons/icon-tag-ember-js-75bf20e1283a95f11323c5048946035d57d64b59dad14e550e416f3d3be45ee9.png',
+                    connectionID: 4
+                },
+                {
+                    backTxt: 'EMBER',
+                    connectionID: 4
+                },
+                {
+                    backImg: 'https://pbs.twimg.com/profile_images/750403034178478081/EPrK3ci2.jpg',
+                    connectionID: 5
+                },
+                {
+                    backTxt: 'MONGO DB',
+                    connectionID: 5
+                },
+                {
+                    backImg: 'https://blog.mastykarz.nl/content/images/2016/07/1-A-_KrEvMuiH7dlwshFw5aw.png',
+                    connectionID: 6
+                },
+                {
+                    backTxt: 'WEBPACK',
+                    connectionID: 6
+                },
+                {
+                    backImg: 'http://s3.amazonaws.com/nlga/uploads/item/image/24639/i.png',
+                    connectionID: 7
+                },
+                {
+                    backTxt: 'IONIC',
+                    connectionID: 7
+                },
+                {
+                    backImg: 'https://laracasts.com/images/series/squares/realtime-laravel-with-socket-io.jpg',
+                    connectionID: 7
+                },
+                {
+                    backTxt: 'SOCKET IO',
+                    connectionID: 7
+                },
             ]
         });
 
         $('#btn-start').click(function() {
-            brainymo.generateNewCardSet();
+            brainymo.generateCardSet();
             $(this).text('Restart');
         });
 
