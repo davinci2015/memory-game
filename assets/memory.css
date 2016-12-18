@@ -82,7 +82,7 @@ body {
 
 .front label {
     display: inline-block;
-    font-size: 26px;
+    font-size: 22px;
     padding-top: 15px;
 }
 
@@ -98,6 +98,22 @@ body {
 .back label {
     width: 100%;
     font-size: 24px;
+}
+
+
+
+/* Timer */
+
+.timer {
+    display: none;
+    position: fixed;
+    left: 30px;
+    top: 30px;
+}
+
+.timer label {
+    display: inline-block;
+    font-size: 20px;
 }
 
 

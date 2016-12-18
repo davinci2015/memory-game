@@ -4,9 +4,10 @@ BRAINYMO.Game = (function() {
 
     // Array to keep track of how many cards are active/open
     var activeCards = [];
-    var timeStart, timeEnd, timeDiff;
     var numOfCards;
     var cardHitCounter = 0;
+    var card;
+    var timer;
 
     /**
      * Method that will be invoked on card click event
@@ -48,13 +49,7 @@ BRAINYMO.Game = (function() {
     }
 
     function endGame() {
-        // Reset hit counter
-        cardHitCounter = 0;
-
-        // Calculate time
-        timeEnd = new Date();
-        timeDiff = (timeEnd - timeStart) / 1000;
-        alert("Your time: " + timeDiff + " seconds");
+        timer.stopTimer();
     }
 
     function checkActiveCards(connections) {
@@ -62,13 +57,13 @@ BRAINYMO.Game = (function() {
     }
 
     return function(config) {
-        var card;
 
         /**
          * Main method for game initialization
          */
         this.startGame = function() {
             card = new BRAINYMO.Card();
+            timer = new BRAINYMO.Timer();
             numOfCards = config.cards.length;
             card.attachCardEvent(handleCardClick, config);
         };
@@ -81,8 +76,11 @@ BRAINYMO.Game = (function() {
             card.generateCards(config.cards, config.numberOfSameCards);
             // Reset active cards array
             activeCards = [];
+
+            // Reset timer
+            timer.stopTimer();
             // Set timer
-            timeStart = new Date();
+            timer.startTimer();
         };
 
         this.startGame();
@@ -184,7 +182,6 @@ BRAINYMO.Card = (function () {
          * Attach click event on every card
          * Before inserting new set of cards method will erase all previous cards
          * @param {Function} func - function that will be invoked on card click
-         * @param {Object} config - configuration object
          */
         this.attachCardEvent = function(func) {
             $cardsContainer.unbind().on('click', '.flip-container', function() {
@@ -193,4 +190,38 @@ BRAINYMO.Card = (function () {
         }
     }
     
+})();
+
+BRAINYMO.Timer = (function() {
+
+    var $timer = $('.timer');
+    var $seconds = $timer.find('#seconds');
+    var $minutes = $timer.find('#minutes');
+    
+    function decorateNumber(value) {
+        return value > 9 ? value : '0' + value;
+    }
+
+    return function() {
+        var interval;
+        
+        this.startTimer = function() {
+            var sec = 0;
+
+            // Set timer interval
+            interval = setInterval( function() {
+                $seconds.html(decorateNumber(++sec % 60));
+                $minutes.html(decorateNumber(parseInt(sec/60,10)));
+            }, 1000);
+
+            // Show timer
+            $timer.delay(1000).fadeIn();
+
+        };
+        
+        this.stopTimer = function() {
+            clearInterval(interval);  
+        }
+        
+    }
 })();
