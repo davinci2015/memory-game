@@ -36,6 +36,11 @@ BRAINYMO.Game = (function() {
 
                 // Game End
                 if(cardHitCounter === (numOfCards / 2)) {
+                    // Reset active cards
+                    activeCards = [];
+                    // Reset counter
+                    cardHitCounter = 0;
+                    // End game
                     endGame();
                 }
             }
@@ -61,7 +66,7 @@ BRAINYMO.Game = (function() {
         // if there's already time saved in storage check if it's better than current one
         if (timeFromStorage != undefined && timeFromStorage != '') {
             // if current game time is better than one saved in store then save new one
-            if (time.minutes < timeFromStorage || (time.minutes == timeFromStorage.minutes || time.seconds < timeFromStorage.seconds) ) {
+            if (time.minutes < timeFromStorage.minutes || (time.minutes == timeFromStorage.minutes && time.seconds < timeFromStorage.seconds) ) {
                 storage.setBestTime(time);
             }
         }
@@ -69,6 +74,9 @@ BRAINYMO.Game = (function() {
         else {
             storage.setBestTime(time);
         }
+
+        // Update best time
+        timer.updateBestTime();
     }
 
     function checkActiveCards(connections) {
@@ -245,6 +253,10 @@ BRAINYMO.Timer = (function() {
             // Show timer
             $timer.delay(1000).fadeIn();
 
+            this.updateBestTime();
+        };
+
+        this.updateBestTime = function() {
             // Check if user have saved best game time
             bestTime = storage.retrieveBestTime();
             if(bestTime != undefined && bestTime != '') {
