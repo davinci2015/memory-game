@@ -107,6 +107,7 @@ body {
 .timer {
     display: none;
     position: fixed;
+    pointer-events: none;
     left: 30px;
     top: 30px;
 }
@@ -171,6 +172,51 @@ body {
 .cursor-default {
     cursor: default !important;
 }
+
+
+/* Reponsive Rules */
+@media screen and (max-width: 1200px) {
+    .flip-container, .front, .back {
+        width: 140px;
+        height: 180px;
+    }
+
+    .timer {
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #FFFFEA;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .flip-container, .front, .back {
+        width: 100px;
+        height: 140px;
+    }
+
+    .front label {
+        display: inline-block;
+        font-size: 16px;
+        padding-top: 10px;
+    }
+
+    .cards-container {
+        margin: 40px 10px;
+    }
+
+    .timer {
+        top: 10px;
+        left: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .flip-container, .front, .back {
+        width: 80px;
+        height: 120px;
+    }
+}
+
 
 
 /* Animations */
