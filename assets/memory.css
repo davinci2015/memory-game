@@ -111,9 +111,15 @@ body {
     top: 30px;
 }
 
-.timer label {
+.timer label#minutes,
+.timer label#seconds {
     display: inline-block;
     font-size: 20px;
+}
+
+.timer .time {
+    display: none;
+    font-size: 13px;
 }
 
 

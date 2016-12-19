@@ -8,6 +8,7 @@ BRAINYMO.Game = (function() {
     var cardHitCounter = 0;
     var card;
     var timer;
+    var storage;
 
     /**
      * Method that will be invoked on card click event
@@ -50,6 +51,24 @@ BRAINYMO.Game = (function() {
 
     function endGame() {
         timer.stopTimer();
+
+        // Retrieve current time
+        var time = timer.retrieveTime();
+
+        // Retrieve time from storage
+        var timeFromStorage = storage.retrieveBestTime();
+
+        // if there's already time saved in storage check if it's better than current one
+        if (timeFromStorage != undefined && timeFromStorage != '') {
+            // if current game time is better than one saved in store then save new one
+            if (time.minutes < timeFromStorage || (time.minutes == timeFromStorage.minutes || time.seconds < timeFromStorage.seconds) ) {
+                storage.setBestTime(time);
+            }
+        }
+        // else if time is not saved in storage save it
+        else {
+            storage.setBestTime(time);
+        }
     }
 
     function checkActiveCards(connections) {
@@ -64,6 +83,7 @@ BRAINYMO.Game = (function() {
         this.startGame = function() {
             card = new BRAINYMO.Card();
             timer = new BRAINYMO.Timer();
+            storage = new BRAINYMO.Storage();
             numOfCards = config.cards.length;
             card.attachCardEvent(handleCardClick, config);
         };
@@ -197,6 +217,10 @@ BRAINYMO.Timer = (function() {
     var $timer = $('.timer');
     var $seconds = $timer.find('#seconds');
     var $minutes = $timer.find('#minutes');
+    var $bestTimeContainer = $timer.find('.time');
+
+
+    var minutes, seconds;
     
     function decorateNumber(value) {
         return value > 9 ? value : '0' + value;
@@ -204,24 +228,67 @@ BRAINYMO.Timer = (function() {
 
     return function() {
         var interval;
+        var storage = new BRAINYMO.Storage();
         
         this.startTimer = function() {
             var sec = 0;
+            var bestTime;
 
             // Set timer interval
             interval = setInterval( function() {
-                $seconds.html(decorateNumber(++sec % 60));
-                $minutes.html(decorateNumber(parseInt(sec/60,10)));
+                seconds = ++sec % 60;
+                minutes = parseInt(sec / 60, 10);
+                $seconds.html(decorateNumber(seconds));
+                $minutes.html(decorateNumber(minutes));
             }, 1000);
 
             // Show timer
             $timer.delay(1000).fadeIn();
 
+            // Check if user have saved best game time
+            bestTime = storage.retrieveBestTime();
+            if(bestTime != undefined && bestTime != '') {
+                $bestTimeContainer
+                    .find('#bestTime')
+                    .text(bestTime.minutes + ':' + bestTime.seconds)
+                    .end()
+                    .fadeIn();
+            }
         };
         
         this.stopTimer = function() {
             clearInterval(interval);  
-        }
-        
+        };
+
+        this.retrieveTime = function() {
+            return {
+                minutes: decorateNumber(minutes),
+                seconds: decorateNumber(seconds)
+            }
+        };
+    }
+})();
+
+
+BRAINYMO.Storage = (function() {
+
+    return function() {
+
+        /**
+         * Save best time to localStorage
+         * key = 'bestTime'
+         * @param {Object} time - object with keys: 'minutes', 'seconds'
+         */
+        this.setBestTime = function(time) {
+            localStorage.setItem('bestTime', JSON.stringify(time));
+        };
+
+        /**
+         * Retrieve best time from localStorage
+         */
+        this.retrieveBestTime = function() {
+            return JSON.parse(localStorage.getItem('bestTime'));
+        };
+
     }
 })();
