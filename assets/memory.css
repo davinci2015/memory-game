@@ -28,6 +28,13 @@ body {
     font-size: 52px;
     font-family: 'Lobster', cursive;
     color: #FF5E5B;
+    margin-bottom: 0;
+}
+
+p.desc {
+    letter-spacing: 0.5px;
+    margin-top: 0;
+    margin-bottom: 60px;
 }
 
 
@@ -81,6 +88,7 @@ body {
 }
 
 .front label {
+    cursor: pointer;
     display: inline-block;
     font-size: 22px;
     padding-top: 15px;
