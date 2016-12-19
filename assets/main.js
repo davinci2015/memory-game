@@ -92,6 +92,7 @@ BRAINYMO.Game = (function() {
             card = new BRAINYMO.Card();
             timer = new BRAINYMO.Timer();
             storage = new BRAINYMO.Storage();
+            numOfCards = config.cards.length;
             card.attachCardEvent(handleCardClick, config);
         };
 
