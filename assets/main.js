@@ -92,7 +92,6 @@ BRAINYMO.Game = (function() {
             card = new BRAINYMO.Card();
             timer = new BRAINYMO.Timer();
             storage = new BRAINYMO.Storage();
-            numOfCards = config.cards.length;
             card.attachCardEvent(handleCardClick, config);
         };
 
@@ -101,7 +100,7 @@ BRAINYMO.Game = (function() {
          */
         this.generateCardSet = function() {
             // Generate new card set
-            card.generateCards(config.cards, config.numberOfSameCards);
+            card.generateCards(config.cards);
             // Reset active cards array
             activeCards = [];
 
