@@ -2,7 +2,6 @@ var BRAINYMO = BRAINYMO || {};
 
 BRAINYMO.Game = (function() {
 
-    // Array to keep track of how many cards are active/open
     var activeCards = [];
     var numOfCards;
     var cardHitCounter = 0;
@@ -11,7 +10,7 @@ BRAINYMO.Game = (function() {
     var storage;
 
     /**
-     * Method that will be invoked on card click event
+     * Method that will be invoked on card click
      */
     function handleCardClick() {
 
@@ -132,10 +131,10 @@ BRAINYMO.Card = (function () {
      */
     function prepareCardTemplate (card) {
         var template = $cardTemplate
-                            .clone()
-                            .removeAttr('id')
-                            .removeClass('hide')
-                            .attr('data-connection', card.connectionID);
+            .clone()
+            .removeAttr('id')
+            .removeClass('hide')
+            .attr('data-connection', card.connectionID);
 
         // If card has background image
         if (card.backImg != '' && card.backImg != undefined) {
@@ -171,7 +170,7 @@ BRAINYMO.Card = (function () {
 
         return cardsArray;
     }
-    
+
     return function() {
 
         /**
@@ -217,7 +216,7 @@ BRAINYMO.Card = (function () {
             });
         }
     }
-    
+
 })();
 
 BRAINYMO.Timer = (function() {
@@ -229,7 +228,7 @@ BRAINYMO.Timer = (function() {
 
 
     var minutes, seconds;
-    
+
     function decorateNumber(value) {
         return value > 9 ? value : '0' + value;
     }
@@ -237,7 +236,7 @@ BRAINYMO.Timer = (function() {
     return function() {
         var interval;
         var storage = new BRAINYMO.Storage();
-        
+
         this.startTimer = function() {
             var sec = 0;
             var bestTime;
@@ -267,9 +266,9 @@ BRAINYMO.Timer = (function() {
                     .fadeIn();
             }
         };
-        
+
         this.stopTimer = function() {
-            clearInterval(interval);  
+            clearInterval(interval);
         };
 
         this.retrieveTime = function() {
@@ -304,3 +303,84 @@ BRAINYMO.Storage = (function() {
 
     }
 })();
+
+
+
+// Game init
+$(function() {
+
+    var brainymo = new BRAINYMO.Game({
+        cards: [
+            {
+                backImg: 'https://s23.postimg.org/gmp35oru3/grunt.jpg',
+                connectionID: 1
+            },
+            {
+                backTxt: 'GRUNT',
+                connectionID: 1
+            },
+            {
+                backImg: 'https://s23.postimg.org/4q21yyfaj/react.jpg',
+                connectionID: 2
+            },
+            {
+                backTxt: 'REACT',
+                connectionID: 2
+            },
+            {
+                backImg: 'https://s23.postimg.org/raxfi9r6z/gsap.jpg',
+                connectionID: 3
+            },
+            {
+                backTxt: 'GSAP',
+                connectionID: 3
+            },
+            {
+                backImg: 'https://s23.postimg.org/bmrmxqm7f/ember.jpg',
+                connectionID: 4
+            },
+            {
+                backTxt: 'EMBER',
+                connectionID: 4
+            },
+            {
+                backImg: 'https://s23.postimg.org/o5cts28kr/karma.jpg',
+                connectionID: 5
+            },
+            {
+                backTxt: 'KARMA',
+                connectionID: 5
+            },
+            {
+                backImg: 'https://s23.postimg.org/ck2nkcn3f/webpack.jpg',
+                connectionID: 6
+            },
+            {
+                backTxt: 'WEBPACK',
+                connectionID: 6
+            },
+            {
+                backImg: 'https://s23.postimg.org/prxfzjv8r/angular.jpg',
+                connectionID: 7
+            },
+            {
+                backTxt: 'ANGULAR',
+                connectionID: 7
+            },
+            {
+                backImg: 'https://s23.postimg.org/oje5rnsob/mongo.jpg',
+                connectionID: 8
+            },
+            {
+                backTxt: 'MONGO DB',
+                connectionID: 8
+            }
+        ]
+    });
+
+    $('#btn-start').click(function() {
+        brainymo.generateCardSet();
+        $(this).text('Restart');
+    });
+
+});

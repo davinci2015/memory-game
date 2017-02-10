@@ -1,0 +1,267 @@
+/* Colors */
+$white: #FFFFEA;
+$red: #FF5E5B;
+$blue: #00CECB;
+$yellow: #FFED66;
+
+/* Fonts */
+$abel: 'Abel', sans-serif;
+$lobster: 'Lobster', cursive;
+
+/* Background images */
+$bgPattern: "https://www.transparenttextures.com/patterns/inspiration-geometry.png";
+
+
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+/* General */
+
+body {
+  background-color: $white;
+  background-image: url($bgPattern);
+  font-family: $abel;
+  color: $red;
+}
+
+
+
+/* Main page */
+
+.heading {
+  font-size: 52px;
+  font-family: $lobster;
+  color: $red;
+  margin-bottom: 0;
+}
+
+p.desc {
+  letter-spacing: 0.5px;
+  margin-top: 0;
+  margin-bottom: 60px;
+}
+
+
+
+/* Cards */
+
+.cards-container {
+  display: block;
+  margin: 40px;
+}
+
+.flip-container {
+  position: relative;
+  display: inline-block;
+  margin: 15px;
+  perspective: 1000px;
+  cursor: pointer;
+
+  .flipper {
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: 0.5s;
+    -moz-transform-style: preserve-3d;
+    -moz-transition: 0.5s;
+    -ms-transform-style: preserve-3d;
+    -ms-transition: 0.5s;
+    -o-transform-style: preserve-3d;
+    -o-transition: 0.5s;
+  }
+
+  &.active .flipper {
+    @include transform(rotateY(180deg));
+  }
+}
+
+
+.flip-container,
+.front,
+.back {
+  border-radius: 5px;
+  color: $white;
+  width: 180px;
+  height: 220px;
+}
+
+.front,
+.back {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility:    hidden;
+  -ms-backface-visibility:     hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.front {
+  background-color: $red;
+  z-index: 2;
+  @include transform(rotateY(0));
+
+  label {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 22px;
+    padding-top: 15px;
+  }
+}
+
+.back {
+  background-color: $blue;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+  @include transform(rotateY(180deg));
+
+  label {
+    display: block;
+    width: 100%;
+    font-size: 24px;
+    margin-top: 10px;
+  }
+}
+
+
+
+/* Timer */
+
+.timer {
+  display: none;
+  position: fixed;
+  pointer-events: none;
+  left: 30px;
+  top: 30px;
+
+  label#minutes,
+  label#seconds {
+    display: inline-block;
+    font-size: 20px;
+  }
+
+  .time {
+    display: none;
+    font-size: 13px;
+  }
+}
+
+
+/* Buttons */
+
+.btn {
+  display: inline-block;
+  background-color: $yellow;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 30px;
+
+  font-family: $abel;
+  font-size: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $red;
+
+  box-shadow: 0 3px 0 $red;
+  cursor: pointer;
+  transition: all 100ms linear;
+
+  &:hover {
+    @include transform(translateY(-4px));
+    box-shadow: 0 7px 0 $red;
+  }
+
+  &:focus { outline: 0; }
+}
+
+
+/* Github ribbon */
+#github {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+
+/* Helpers */
+
+.align-center {
+  text-align: center;
+}
+
+.hide {
+  display: none !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+
+
+/* Reponsive Rules */
+
+@media screen and (max-width: 1200px) {
+  .flip-container, .front, .back {
+    width: 140px;
+    height: 180px;
+  }
+
+  .timer {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: $white;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .flip-container, .front, .back {
+    width: 100px;
+    height: 140px;
+  }
+
+  .front label {
+    display: inline-block;
+    font-size: 16px;
+    padding-top: 10px;
+  }
+
+  .cards-container {
+    margin: 40px 10px;
+  }
+
+  .timer {
+    top: 10px;
+    left: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .flip-container, .front, .back {
+    width: 80px;
+    height: 120px;
+  }
+}
+
+
+
+/* Animations */
+
+@keyframes wobble {
+  from { transform: none; }
+  15% { transform: translate3d(-10%, 0, 0) rotate3d(0, 0, 1, -5deg); }
+  30% { transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 3deg); }
+  45% { transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -3deg); }
+  60% { transform: translate3d(5%, 0, 0) rotate3d(0, 0, 1, 2deg); }
+  75% { transform: translate3d(-10%, 0, 0) rotate3d(0, 0, 1, -1deg); }
+  to { transform: none; }
+}
+
+.wobble {
+  animation: wobble 600ms ease-in-out;
+}
+
