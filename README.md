@@ -4,5 +4,4 @@ Memory game - memory cards with frontend technology theme
 
 ![alt text](http://i.giphy.com/l3q2rXQjQrdPwmArS.gif "Memory Game")
 
-### Instructions
-Clone repository and open _index.html_
+Live on: https://davinci2015.github.io/memory-game/
